@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>나는 어떤 인플루언서가 되고 싶을까?</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
+/>
+<style>
+  :root {
+    --bg: #f7f6fb;
+    --card: #ffffff;
+    --ink: #1a1730;
+    --ink-soft: #5b566f;
+    --line: #e7e4f0;
+    --brand: #6c4ce0;
+    --brand-soft: #efeafc;
+    --brand-ink: #4a2fb0;
+    /* 유형별 포인트 컬러 */
+    --A: #2563eb;
+    --B: #ff6b6b;
+    --C: #f59e0b;
+    --D: #10b981;
+    --E: #8b5cf6;
+    --shadow: 0 18px 40px -20px rgba(40, 24, 90, 0.35);
+    --radius: 20px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background:
+      radial-gradient(120% 80% at 100% 0%, #f0ebff 0%, transparent 45%),
+      radial-gradient(120% 80% at 0% 100%, #fdeef4 0%, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-tag {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--brand);
+    background: var(--brand-soft);
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 34px 28px;
+  }
+
+  /* ---------- 인트로 ---------- */
+  .intro { text-align: center; margin: auto 0; }
+  .intro h1 {
+    font-size: clamp(28px, 7vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin: 18px 0 12px;
+  }
+  .intro h1 .hl { color: var(--brand); }
+  .intro p {
+    color: var(--ink-soft);
+    font-size: 16px;
+    margin: 0 auto 8px;
+    max-width: 420px;
+  }
+  .meta-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 22px 0 30px;
+  }
+  .chip {
+    font-size: 13px;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 14px;
+    background: #fbfaff;
+  }
+
+  .btn {
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 17px;
+    color: #fff;
+    background: var(--brand);
+    padding: 16px 30px;
+    border-radius: 14px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    box-shadow: 0 10px 22px -10px rgba(108, 76, 224, 0.8);
+  }
+  .btn:hover { background: var(--brand-ink); transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn:focus-visible { outline: 3px solid var(--brand-soft); outline-offset: 3px; }
+  .btn.ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    box-shadow: none;
+    font-size: 15px;
+    padding: 10px 12px;
+  }
+  .btn.ghost:hover { color: var(--ink); background: var(--brand-soft); }
+
+  /* ---------- 진행바 ---------- */
+  .progress-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .progress-track {
+    height: 8px;
+    background: #eceafa;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--brand), #a084f5);
+    border-radius: 999px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ---------- 질문 ---------- */
+  .q-number { font-size: 14px; font-weight: 700; color: var(--brand); }
+  .q-text {
+    font-size: clamp(20px, 5vw, 25px);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    margin: 8px 0 24px;
+  }
+  .options { display: flex; flex-direction: column; gap: 12px; }
+  .option {
+    text-align: left;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    background: #fbfaff;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 17px 18px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .option:hover { border-color: var(--brand); background: #fff; transform: translateX(2px); }
+  .option:focus-visible { outline: 3px solid var(--brand-soft); outline-offset: 2px; }
+  .option .dot {
+    flex: 0 0 auto;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .option:hover .dot { border-color: var(--brand); }
+  .nav-row { margin-top: 22px; display: flex; justify-content: flex-start; }
+
+  /* ---------- 결과 ---------- */
+  .result-top { text-align: center; }
+  .result-emoji { font-size: 54px; line-height: 1; margin-bottom: 6px; }
+  .result-kicker {
+    font-size: 14px; font-weight: 700; letter-spacing: 0.03em;
+    color: var(--accent, var(--brand));
+  }
+  .result-title {
+    font-size: clamp(26px, 6.5vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 6px 0 4px;
+  }
+  .result-tagline { color: var(--ink-soft); font-size: 16px; margin: 0; }
+
+  .result-section { margin-top: 26px; }
+  .result-section h3 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--accent, var(--brand));
+    margin: 0 0 8px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .result-section h3::before {
+    content: ""; width: 16px; height: 3px; border-radius: 2px;
+    background: var(--accent, var(--brand));
+  }
+  .result-section p { margin: 0; color: var(--ink); font-size: 15.5px; }
+
+  .tips { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 8px; }
+  .tips li {
+    background: #fbfaff; border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 14px; font-size: 15px; color: var(--ink);
+  }
+  .tips li b { color: var(--accent, var(--brand)); }
+
+  /* 점수 분포 막대 */
+  .score-list { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+  .score-row { display: grid; grid-template-columns: 92px 1fr 34px; align-items: center; gap: 10px; }
+  .score-name { font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+  .score-bar-track { height: 10px; background: #eeecf7; border-radius: 999px; overflow: hidden; }
+  .score-bar-fill { height: 100%; border-radius: 999px; width: 0; transition: width 0.7s cubic-bezier(0.4,0,0.2,1); }
+  .score-val { font-size: 13px; font-weight: 700; color: var(--ink-soft); text-align: right; }
+  .score-row.is-top .score-name { color: var(--ink); font-weight: 800; }
+  .score-row.is-top .score-val { color: var(--ink); }
+
+  .restart-row { margin-top: 30px; text-align: center; }
+  .foot-note { text-align: center; color: var(--ink-soft); font-size: 12.5px; margin-top: 26px; }
+
+  /* ---------- 광고 화면 ---------- */
+  .ad-card { text-align: center; }
+  .ad-inner {
+    display: flex; align-items: center; gap: 16px;
+    text-align: left; margin: 20px 0 4px;
+    background: #fbfaff; border: 1px solid var(--line);
+    border-radius: 16px; padding: 16px;
+  }
+  .ad-img {
+    flex: 0 0 auto; width: 92px; height: 92px;
+    border-radius: 12px; object-fit: cover; background: #eee;
+  }
+  .ad-img--empty {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 38px; background: var(--brand-soft);
+  }
+  .ad-body { flex: 1 1 auto; min-width: 0; }
+  .ad-title { font-weight: 800; font-size: 17px; margin-bottom: 3px; }
+  .ad-desc { margin: 0 0 12px; color: var(--ink-soft); font-size: 14px; }
+  .ad-cta {
+    display: inline-block; font-size: 15px; padding: 11px 20px;
+    box-shadow: 0 8px 18px -9px rgba(108,76,224,.8);
+    text-decoration: none;
+  }
+  .ad-disclosure {
+    font-size: 11.5px; color: var(--ink-soft);
+    background: #f2f0fa; border-radius: 8px;
+    padding: 9px 12px; margin: 14px 0 0; line-height: 1.5;
+  }
+  .ad-next { margin-top: 14px; }
+  @media (max-width: 440px) {
+    .ad-inner { flex-direction: column; text-align: center; }
+    .ad-body { text-align: center; }
+  }
+
+  /* 화면 전환 */
+  .screen { animation: fade 0.35s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="app"></div>
+</div>
+
+<script>
+/* =========================================================
+   1) 데이터 : 유형(TYPES) · 질문(QUESTIONS)
+   각 선택지는 type(A~E)을 하나씩 가리키고,
+   질문마다 weight(가중치)를 둔다. 마지막 '목표' 질문만 2점.
+   ========================================================= */
+
+const TYPES = {
+  A: {
+    key: "A", color: "var(--A)", emoji: "📚",
+    kicker: "지식 크리에이터",
+    title: "믿고 보는 정보통",
+    tagline: "정보와 신뢰로 팬을 모으는 사람",
+    desc: "당신은 '이거 궁금했는데!'를 시원하게 긁어주는 타입이에요. 어려운 걸 쉽게 정리하는 능력이 무기라, 팔로워는 재미보다 신뢰로 남아요. 유행을 좇기보다 자기 분야를 깊게 파고들 때 가장 빛나요.",
+    why: "6문항에서 '정보·설명·전문성'을 반복해서 골랐어요. 콘텐츠의 중심이 '나'보다 '도움'에 있는 사람이라, 한 분야의 전문가로 포지셔닝할 때 성장 속도가 가장 빨라요.",
+    tips: [
+      { t: "추천 포맷", d: "짧은 정보 요약 릴스 + 깊이 있는 블로그/뉴스레터 조합" },
+      { t: "첫 스텝", d: "관심 분야 딱 하나 정하고, 자주 나오는 질문 10개부터 답해보기" }
+    ]
+  },
+  B: {
+    key: "B", color: "var(--B)", emoji: "🌿",
+    kicker: "라이프스타일 크리에이터",
+    title: "분위기 메이커",
+    tagline: "나다운 무드로 사람을 모으는 사람",
+    desc: "평범한 하루도 당신 손을 거치면 예뻐 보여요. 정보나 웃음보다 '분위기'와 '취향'이 콘텐츠의 핵심이라, 팔로워는 당신의 세계관에 스며들 듯 팬이 돼요. 꾸준함과 톤 유지가 곧 경쟁력이에요.",
+    why: "감성·일상·나다움을 향한 선택이 많았어요. 특정 정보보다 '이 사람의 무드'를 소비하고 싶어하는 팬층과 잘 맞아서, 라이프스타일 브랜드로 확장하기 좋은 결이에요.",
+    tips: [
+      { t: "추천 포맷", d: "일관된 색감·톤의 사진/브이로그, 반복되는 시그니처 장면" },
+      { t: "첫 스텝", d: "내 계정의 '무드 보드' 3장 정하기 — 색·장소·감정" }
+    ]
+  },
+  C: {
+    key: "C", color: "var(--C)", emoji: "🎤",
+    kicker: "엔터테이너",
+    title: "웃음 버튼",
+    tagline: "보는 순간 기분 좋아지는 사람",
+    desc: "당신은 어색한 순간도 웃음으로 바꾸는 재주가 있어요. 사람들은 정보를 얻으러 오는 게 아니라 '기분 전환'하러 와요. 캐릭터와 순발력이 핵심이라, 대중적으로 가장 빠르게 퍼질 수 있는 유형이에요.",
+    why: "재미·웃음·즐거움을 주는 방향을 계속 택했어요. 콘텐츠의 목적이 '전달'보다 '반응'에 있어서, 캐릭터가 확실할수록 도달과 확산이 커지는 예능형 크리에이터예요.",
+    tips: [
+      { t: "추천 포맷", d: "밈·챌린지·상황극처럼 반응을 부르는 짧은 영상" },
+      { t: "첫 스텝", d: "내 웃음 코드 한 줄로 정의하기 (예: '리액션 부자')" }
+    ]
+  },
+  D: {
+    key: "D", color: "var(--D)", emoji: "🛍️",
+    kicker: "커머스 크리에이터",
+    title: "취향 셀렉트샵",
+    tagline: "안목으로 파는 사람",
+    desc: "당신은 '좋은 걸 알아보고 소개하는' 감각이 뛰어나요. 콘텐츠가 곧 큐레이션이고, 팔로워는 당신의 추천을 신뢰해 지갑을 열어요. 팬심과 구매를 자연스럽게 잇는, 수익화가 가장 빠른 유형이에요.",
+    why: "트렌드·제품·사업 지향의 선택이 많았어요. '좋아요'를 '구매'로 연결하는 감각이 있어서, 커머스·공동구매·자기 브랜드로 확장할 때 강점이 크게 발휘돼요.",
+    tips: [
+      { t: "추천 포맷", d: "솔직 리뷰 + 사용 전후 비교, 라이브 커머스" },
+      { t: "첫 스텝", d: "내가 진심으로 추천할 수 있는 카테고리 하나 정하기" }
+    ]
+  },
+  E: {
+    key: "E", color: "var(--E)", emoji: "🎨",
+    kicker: "크리에이티브 크리에이터",
+    title: "장르 개척자",
+    tagline: "본 적 없는 걸 만드는 사람",
+    desc: "당신은 남들이 안 한 방식으로 표현할 때 살아나요. 정보·웃음·판매보다 '새로움' 자체가 콘텐츠라, 초반엔 느려도 한번 통하면 대체 불가능한 아이덴티티가 돼요. 오래 남는 창작자의 결이에요.",
+    why: "실험·독창성·창작을 향한 선택이 두드러졌어요. 유행을 따라가기보다 만들어내는 사람이라, 남과 비교하기 어려운 자기만의 장르를 구축할 때 가장 오래갑니다.",
+    tips: [
+      { t: "추천 포맷", d: "연작 시리즈, 세계관이 있는 프로젝트형 콘텐츠" },
+      { t: "첫 스텝", d: "'나만 할 수 있는 것' 한 문장으로 적어보기" }
+    ]
+  }
+};
+
+const QUESTIONS = [
+  {
+    q: "콘텐츠를 만들 때, 가장 신경 쓰는 건 뭐예요?",
+    weight: 1,
+    options: [
+      { t: "사람들이 궁금해하던 걸 알려주는 것", type: "A" },
+      { t: "나만의 감성과 분위기를 담는 것", type: "B" },
+      { t: "보는 사람을 웃게 만드는 것", type: "C" },
+      { t: "좋은 걸 발견하면 소개하는 것", type: "D" }
+    ]
+  },
+  {
+    q: "스스로 생각하는 나의 최고 강점은?",
+    weight: 1,
+    options: [
+      { t: "어려운 걸 쉽게 정리해서 설명하기", type: "A" },
+      { t: "평범한 일상도 예쁘게 담아내기", type: "B" },
+      { t: "뜰 것 같은 트렌드·물건 알아보기", type: "D" },
+      { t: "남들과 다른 관점으로 표현하기", type: "E" }
+    ]
+  },
+  {
+    q: "팔로워한테 가장 듣고 싶은 말은?",
+    weight: 1,
+    options: [
+      { t: "\"덕분에 궁금증이 풀렸어요!\"", type: "A" },
+      { t: "\"여기 분위기 너무 좋아요.\"", type: "B" },
+      { t: "\"오늘도 한참 웃었어요 ㅋㅋ\"", type: "C" },
+      { t: "\"이런 건 처음 봐요, 신기해요.\"", type: "E" }
+    ]
+  },
+  {
+    q: "콘텐츠 아이디어가 가장 잘 떠오르는 순간은?",
+    weight: 1,
+    options: [
+      { t: "뉴스·책·자료를 읽다가", type: "A" },
+      { t: "카페나 여행지에서 문득", type: "B" },
+      { t: "친구들이랑 수다 떨다가", type: "C" },
+      { t: "쇼핑하거나 신상 구경하다가", type: "D" }
+    ]
+  },
+  {
+    q: "이런 협업 제안이 온다면, 제일 끌리는 건?",
+    weight: 1,
+    options: [
+      { t: "감성 브랜드의 화보·룩북 촬영", type: "B" },
+      { t: "예능·방송 프로그램 출연", type: "C" },
+      { t: "라이브 커머스 판매 방송", type: "D" },
+      { t: "아티스트와의 실험적 콜라보", type: "E" }
+    ]
+  },
+  {
+    q: "크리에이터로서 진짜 이루고 싶은 건? (가장 중요!)",
+    weight: 2, /* 목표 질문은 방향을 결정 → 2배 가중치 */
+    options: [
+      { t: "그 분야 하면 떠오르는 전문가 되기", type: "A" },
+      { t: "나다운 라이프스타일 브랜드 만들기", type: "B" },
+      { t: "많은 사람에게 즐거움 주는 사람 되기", type: "C" },
+      { t: "내 안목으로 사업·브랜드 키우기", type: "D" },
+      { t: "새로운 장르를 만드는 창작자 되기", type: "E" }
+    ]
+  }
+];
+
+/* 만점 = 가중치 합 (막대 그래프 정규화에 사용) */
+const MAX_SCORE = QUESTIONS.reduce((s, q) => s + q.weight, 0);
+
+/* =========================================================
+   [광고 설정] 결과 직전에 보여줄 쿠팡 파트너스 광고
+   ▸ 여기 3줄만 내 링크/이미지/문구로 바꾸면 돼요.
+   ▸ 자동으로 여는 방식(X) → 사용자가 눌러서 새 탭으로 여는 방식(O)
+     이게 쿠팡 정책상 안전하고, 수익도 이 방식으로만 발생해요.
+   ▸ disclosure 문구는 파트너스 필수 고지라 지우지 마세요.
+   ========================================================= */
+const AD = {
+  link:  "https://www.coupang.com/",              // ← 내 쿠팡 파트너스 링크
+  image: "",                                       // ← 상품 이미지 URL (없으면 "" 그대로)
+  title: "결과 보기 전, 오늘의 추천템 👀",           // ← 광고 제목
+  desc:  "크리에이터에게 유용한 아이템, 여기서 확인해보세요.", // ← 한 줄 설명
+  cta:   "쿠팡에서 보기",                            // ← 버튼 문구
+  disclosure: "이 게시물은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다."
+};
+
+/* =========================================================
+   2) 상태 & 렌더링
+   ========================================================= */
+const app = document.getElementById("app");
+let step = -1;               // -1: 인트로, 0..N-1: 질문, N: 결과
+let answers = [];            // 각 질문에서 고른 type
+
+function renderIntro() {
+  app.innerHTML = `
+    <div class="screen intro card">
+      <span class="brand-tag">인플루언서 유형 테스트</span>
+      <h1>나는 어떤 <span class="hl">인플루언서</span>가<br/>되고 싶을까?</h1>
+      <p>6개의 질문에 답하면, 당신에게 잘 맞는 크리에이터 유형을 추천해드려요.</p>
+      <div class="meta-row">
+        <span class="chip">⏱️ 약 1분</span>
+        <span class="chip">📝 6문항</span>
+        <span class="chip">🎯 5가지 유형</span>
+      </div>
+      <button class="btn" id="start">테스트 시작하기</button>
+    </div>`;
+  document.getElementById("start").onclick = () => { step = 0; render(); };
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[step];
+  const pct = Math.round((step / QUESTIONS.length) * 100);
+  const opts = q.options.map((o, i) => `
+    <button class="option" data-type="${o.type}">
+      <span class="dot"></span><span>${o.t}</span>
+    </button>`).join("");
+
+  app.innerHTML = `
+    <div class="screen card">
+      <div class="progress-head">
+        <span>질문 ${step + 1} / ${QUESTIONS.length}</span>
+        <span>${pct}%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+
+      <div class="q-number">Q${step + 1}${q.weight > 1 ? " · 결정적 질문" : ""}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">${opts}</div>
+
+      <div class="nav-row">
+        ${step > 0 ? '<button class="btn ghost" id="back">← 이전</button>' : ""}
+      </div>
+    </div>`;
+
+  document.querySelectorAll(".option").forEach((btn) => {
+    btn.onclick = () => {
+      answers[step] = btn.dataset.type;
+      step++;
+      if (step >= QUESTIONS.length) renderAd();  // 마지막 질문 → 광고 화면
+      else renderQuestion();
+    };
+  });
+  const back = document.getElementById("back");
+  if (back) back.onclick = () => { step--; renderQuestion(); };
+}
+
+/* 광고 화면 : 결과 직전, 사용자가 직접 눌러서 새 탭으로 이동 ---- */
+function renderAd() {
+  const imgBlock = AD.image
+    ? `<img class="ad-img" src="${AD.image}" alt="추천 상품 이미지" />`
+    : `<div class="ad-img ad-img--empty">🛍️</div>`;
+
+  app.innerHTML = `
+    <div class="screen card ad-card">
+      <span class="brand-tag">잠깐! 결과가 거의 다 나왔어요</span>
+      <div class="ad-inner">
+        ${imgBlock}
+        <div class="ad-body">
+          <div class="ad-title">${AD.title}</div>
+          <p class="ad-desc">${AD.desc}</p>
+          <a class="btn ad-cta" href="${AD.link}" target="_blank" rel="noopener nofollow sponsored">
+            ${AD.cta} →
+          </a>
+        </div>
+      </div>
+      <p class="ad-disclosure">${AD.disclosure}</p>
+      <div class="ad-next">
+        <button class="btn ghost" id="toResult">건너뛰고 결과 보기 →</button>
+      </div>
+    </div>`;
+
+  document.getElementById("toResult").onclick = () => {
+    step = QUESTIONS.length + 1;
+    renderResult();
+  };
+}
+
+/* 3) 채점 로직 --------------------------------------------
+   - 고른 선택지의 type에 해당 질문 weight만큼 점수 누적
+   - 최고점 유형이 결과
+   - 동점이면 마지막(목표) 질문에서 고른 유형 우선, 그래도 없으면 첫 유형
+   -------------------------------------------------------- */
+function score() {
+  const s = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+  answers.forEach((type, i) => { s[type] += QUESTIONS[i].weight; });
+
+  const max = Math.max(...Object.values(s));
+  const leaders = Object.keys(s).filter((k) => s[k] === max);
+
+  let winner = leaders[0];
+  if (leaders.length > 1) {
+    const goalType = answers[QUESTIONS.length - 1]; // 마지막 질문 = 목표
+    winner = leaders.includes(goalType) ? goalType : leaders[0];
+  }
+  return { scores: s, winner };
+}
+
+function renderResult() {
+  const { scores, winner } = score();
+  const r = TYPES[winner];
+  const count = answers.filter((a) => a === winner).length;
+
+  const rows = Object.keys(TYPES).map((k) => {
+    const val = scores[k];
+    const pct = Math.round((val / MAX_SCORE) * 100);
+    const isTop = k === winner;
+    return `
+      <div class="score-row ${isTop ? "is-top" : ""}">
+        <span class="score-name">${TYPES[k].emoji} ${TYPES[k].kicker}</span>
+        <span class="score-bar-track">
+          <span class="score-bar-fill" data-w="${pct}" style="background:${TYPES[k].color}"></span>
+        </span>
+        <span class="score-val">${val}점</span>
+      </div>`;
+  }).join("");
+
+  const tips = r.tips.map((tp) => `<li><b>${tp.t}</b> · ${tp.d}</li>`).join("");
+
+  app.innerHTML = `
+    <div class="screen card" style="--accent:${r.color}">
+      <div class="result-top">
+        <span class="brand-tag">당신에게 어울리는 유형은</span>
+        <div class="result-emoji">${r.emoji}</div>
+        <div class="result-kicker">${r.kicker}</div>
+        <h2 class="result-title">${r.title}</h2>
+        <p class="result-tagline">${r.tagline}</p>
+      </div>
+
+      <div class="result-section">
+        <h3>이런 사람이에요</h3>
+        <p>${r.desc}</p>
+      </div>
+
+      <div class="result-section">
+        <h3>왜 이 유형을 추천했냐면</h3>
+        <p>${r.why} <b style="color:${r.color}">6문항 중 ${count}개</b>에서 이 방향을 택했어요.</p>
+      </div>
+
+      <div class="result-section">
+        <h3>이렇게 시작해보세요</h3>
+        <ul class="tips">${tips}</ul>
+      </div>
+
+      <div class="result-section">
+        <h3>내 유형 점수 분포</h3>
+        <div class="score-list">${rows}</div>
+      </div>
+
+      <div class="restart-row">
+        <button class="btn" id="again">다시 해보기</button>
+      </div>
+      <p class="foot-note">가장 높은 점수의 유형이 결과예요 · 마지막 목표 질문은 2배로 반영했어요</p>
+    </div>`;
+
+  // 막대 애니메이션
+  requestAnimationFrame(() => {
+    document.querySelectorAll(".score-bar-fill").forEach((el) => {
+      el.style.width = el.dataset.w + "%";
+    });
+  });
+
+  document.getElementById("again").onclick = () => {
+    step = -1; answers = []; render();
+  };
+}
+
+function render() {
+  if (step === -1) renderIntro();
+  else if (step < QUESTIONS.length) renderQuestion();
+  else if (step === QUESTIONS.length) renderAd();   // 광고 화면
+  else renderResult();
+}
+
+render();
+</script>
+</body>
+</html>
